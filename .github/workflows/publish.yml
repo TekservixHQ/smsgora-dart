@@ -1,0 +1,13 @@
+# Publishes to pub.dev when a version tag (v1.2.3) is pushed.
+# Needs "Automated publishing" enabled on the package's pub.dev admin page
+# (repository TekservixHQ/smsgora-dart, tag pattern v{{version}}).
+name: publish
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  publish:
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
