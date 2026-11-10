@@ -1,0 +1,40 @@
+name: tests
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: ['3.4.0', stable]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+      - run: dart pub get
+      - run: dart analyze --fatal-infos
+      - run: dart test
+  format-and-score:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+      - run: dart pub get
+      - name: Format check (writes format.patch if anything changes)
+        run: |
+          dart format .
+          git diff > format.patch
+          cat format.patch
+      - uses: actions/upload-artifact@v4
+        with:
+          name: format-patch
+          path: format.patch
+      - run: test ! -s format.patch
+      - run: dart pub publish --dry-run
+      - name: pana score
+        run: |
+          dart pub global activate pana
+          dart pub global run pana --no-warning . | tail -60
