@@ -11,9 +11,8 @@ void main() {
   var reply = '{"success":true,"data":{"message_ids":[1873]}}';
   var headers = <String, String>{'content-type': 'application/json'};
 
-  SmsGora client() => SmsGora('sgk_test',
-      baseUrl: 'https://example.test/api/',
-      httpClient: MockClient((req) async {
+  SmsGora client() => SmsGora('sgk_test', baseUrl: 'https://example.test/api/',
+          httpClient: MockClient((req) async {
         last = req;
         return http.Response(reply, status, headers: headers);
       }));
@@ -53,7 +52,11 @@ void main() {
   test('bulk and other paths', () async {
     final c = client();
     await c.sendBulkSms(
-        42, [const BulkMessage(['+1'], message: 'a'), const BulkMessage(['+2'])],
+        42,
+        [
+          const BulkMessage(['+1'], message: 'a'),
+          const BulkMessage(['+2'])
+        ],
         messageTemplate: 't');
     expect(last.url.path, '/api/devices/42/send-bulk-sms');
     expect(body()['messageTemplate'], 't');
@@ -108,7 +111,8 @@ void main() {
         'sha256=e125c07dfbecb498e8979383d7b9f0815efb128755409794b486d4bbb7199583';
     expect(SmsGora.verifyWebhook(raw, sig, 'whsec_test'), isTrue);
     expect(SmsGora.verifyWebhook(raw, sig, 'other'), isFalse);
-    expect(SmsGora.verifyWebhook(utf8.encode('{}'), sig, 'whsec_test'), isFalse);
+    expect(
+        SmsGora.verifyWebhook(utf8.encode('{}'), sig, 'whsec_test'), isFalse);
     expect(SmsGora.verifyWebhook(raw, null, 'whsec_test'), isFalse);
   });
 
