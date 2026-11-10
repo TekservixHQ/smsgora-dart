@@ -104,8 +104,8 @@ class SmsGora {
       req.body = jsonEncode(body);
     }
 
-    final res = await http.Response.fromStream(
-        await _http.send(req).timeout(_timeout));
+    final res =
+        await http.Response.fromStream(await _http.send(req).timeout(_timeout));
     final text = utf8.decode(res.bodyBytes, allowMalformed: true);
     Object? json;
     if (text.isNotEmpty) {
@@ -224,7 +224,8 @@ class SmsGora {
       return false;
     }
     final mac = Hmac(sha256, utf8.encode(secret)).convert(rawBody);
-    return _constantTimeEquals(utf8.encode('sha256=$mac'), utf8.encode(signature));
+    return _constantTimeEquals(
+        utf8.encode('sha256=$mac'), utf8.encode(signature));
   }
 
   static bool _constantTimeEquals(List<int> a, List<int> b) {
