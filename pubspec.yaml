@@ -1,0 +1,24 @@
+name: smsgora
+description: Dart and Flutter client for the SMS Gora SMS Gateway API. Send and receive SMS through your own Android phones, with delivery reports and webhooks.
+version: 1.0.0
+homepage: https://tekservix.com/smsgora/
+repository: https://github.com/TekservixHQ/smsgora-dart
+issue_tracker: https://github.com/TekservixHQ/smsgora-dart/issues
+documentation: https://tekservix.com/smsgora/docs/
+topics:
+  - sms
+  - sms-gateway
+  - bulk-sms
+  - otp
+  - api
+
+environment:
+  sdk: ^3.4.0
+
+dependencies:
+  crypto: ^3.0.3
+  http: ^1.2.0
+
+dev_dependencies:
+  lints: '>=4.0.0 <7.0.0'
+  test: ^1.25.0
