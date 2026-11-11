@@ -19,7 +19,7 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
 /// Package version, sent in the User-Agent header.
-const String smsGoraVersion = '1.0.0';
+const String smsGoraVersion = '1.0.1';
 
 /// Thrown when the API answers with an error.
 class SmsGoraException implements Exception {
