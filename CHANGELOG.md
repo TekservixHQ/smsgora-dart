@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.0.2
 
 - Package description and README now lead with the product name.
 
